@@ -1,21 +1,39 @@
 error[E0277]: the trait bound `usize: Responder<'_>` is not satisfied
- --> $DIR/catch_type_errors.rs:6:30
+ --> tests/ui-fail/catch_type_errors.rs:6:30
   |
 6 | fn f1(_request: &Request) -> usize {
   |                              ^^^^^ the trait `Responder<'_>` is not implemented for `usize`
   |
-  = note: required by `respond_to`
+  = help: the following other types implement trait `Responder<'r>`:
+            <&'r [u8] as Responder<'r>>
+            <&'r str as Responder<'r>>
+            <() as Responder<'r>>
+            <Content<R> as Responder<'r>>
+            <File as Responder<'r>>
+            <Flash<R> as Responder<'r>>
+            <JavaScript<R> as Responder<'r>>
+            <MsgPack<R> as Responder<'r>>
+          and 26 others
 
 error[E0277]: the trait bound `bool: Responder<'_>` is not satisfied
-  --> $DIR/catch_type_errors.rs:12:30
+  --> tests/ui-fail/catch_type_errors.rs:12:30
    |
 12 | fn f2(_request: &Request) -> bool {
    |                              ^^^^ the trait `Responder<'_>` is not implemented for `bool`
    |
-   = note: required by `respond_to`
+   = help: the following other types implement trait `Responder<'r>`:
+             <&'r [u8] as Responder<'r>>
+             <&'r str as Responder<'r>>
+             <() as Responder<'r>>
+             <Content<R> as Responder<'r>>
+             <File as Responder<'r>>
+             <Flash<R> as Responder<'r>>
+             <JavaScript<R> as Responder<'r>>
+             <MsgPack<R> as Responder<'r>>
+           and 26 others
 
 error[E0308]: mismatched types
-  --> $DIR/catch_type_errors.rs:18:7
+  --> tests/ui-fail/catch_type_errors.rs:18:7
    |
 17 | #[catch(404)]
    | ------------- expected due to this
@@ -26,9 +44,18 @@ error[E0308]: mismatched types
                  found fn item `fn(bool) -> usize {f3}`
 
 error[E0277]: the trait bound `usize: Responder<'_>` is not satisfied
-  --> $DIR/catch_type_errors.rs:24:12
+  --> tests/ui-fail/catch_type_errors.rs:24:12
    |
 24 | fn f4() -> usize {
    |            ^^^^^ the trait `Responder<'_>` is not implemented for `usize`
    |
-   = note: required by `respond_to`
+   = help: the following other types implement trait `Responder<'r>`:
+             <&'r [u8] as Responder<'r>>
+             <&'r str as Responder<'r>>
+             <() as Responder<'r>>
+             <Content<R> as Responder<'r>>
+             <File as Responder<'r>>
+             <Flash<R> as Responder<'r>>
+             <JavaScript<R> as Responder<'r>>
+             <MsgPack<R> as Responder<'r>>
+           and 26 others
