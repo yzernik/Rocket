@@ -1,6 +1,6 @@
 [package]
 name = "rocket_contrib"
-version = "0.4.10"
+version = "0.4.11"
 authors = ["Sergio Benitez <sb@sergio.bz>"]
 description = "Community contributed libraries for the Rocket web framework."
 documentation = "https://api.rocket.rs/v0.4/rocket_contrib/"
@@ -38,8 +38,8 @@ memcache_pool = ["databases", "memcache", "r2d2-memcache"]
 
 [dependencies]
 # Global dependencies.
-rocket_contrib_codegen = { version = "0.4.10", path = "../codegen", optional = true }
-rocket = { version = "0.4.10", path = "../../core/lib/", default-features = false }
+rocket_contrib_codegen = { version = "0.4.11", path = "../codegen", optional = true }
+rocket = { version = "0.4.11", path = "../../core/lib/", default-features = false }
 log = "0.4"
 
 # Serialization and templating dependencies.
@@ -58,9 +58,7 @@ uuid = { version = "0.7", optional = true }
 
 # Database dependencies
 diesel = { version = "1.0", default-features = false, optional = true }
-postgres = { version = "0.15", optional = true }
 r2d2 = { version = "0.8", optional = true }
-r2d2_postgres = { version = "0.14", optional = true }
 mysql = { version = "14", optional = true }
 r2d2_mysql = { version = "9", optional = true }
 rusqlite = { version = "0.14.0", optional = true }
@@ -69,10 +67,13 @@ rusted_cypher = { version = "1", optional = true }
 r2d2_cypher = { version = "0.4", optional = true }
 redis = { version = "0.9", optional = true }
 r2d2_redis = { version = "0.8", optional = true }
-mongodb = { version = "0.3.12", optional = true }
-r2d2-mongodb = { version = "0.2.0", optional = true }
 memcache = { version = "0.11", optional = true }
 r2d2-memcache = { version = "0.3", optional = true }
+
+# postgres = { version = "0.15", optional = true }
+# r2d2_postgres = { version = "0.14", optional = true }
+# mongodb = { version = "0.3.12", optional = true }
+# r2d2-mongodb = { version = "0.2.0", optional = true }
 
 # SpaceHelmet dependencies
 time = { version = "0.1.40", optional = true }
