@@ -6,7 +6,7 @@ use std::str::FromStr;
 use log;
 use yansi::Paint;
 
-crate const COLORS_ENV: &str = "ROCKET_CLI_COLORS";
+pub(crate) const COLORS_ENV: &str = "ROCKET_CLI_COLORS";
 
 struct RocketLogger(LoggingLevel);
 
@@ -71,15 +71,15 @@ macro_rules! launch_info { ($($args:tt)*) => { info!(target: "launch", $($args)*
 #[doc(hidden)] #[macro_export]
 macro_rules! launch_info_ { ($($args:tt)*) => { info!(target: "launch_", $($args)*) } }
 #[doc(hidden)] #[macro_export]
-macro_rules! error_ { ($($args:expr),+) => { log_!(error: $($args),+); }; }
+macro_rules! error_ { ($($args:expr),+) => { log_!(error: $($args),+) }; }
 #[doc(hidden)] #[macro_export]
-macro_rules! info_ { ($($args:expr),+) => { log_!(info: $($args),+); }; }
+macro_rules! info_ { ($($args:expr),+) => { log_!(info: $($args),+) }; }
 #[doc(hidden)] #[macro_export]
 macro_rules! trace_ { ($($args:expr),+) => { log_!(trace: $($args),+); }; }
 #[doc(hidden)] #[macro_export]
 macro_rules! debug_ { ($($args:expr),+) => { log_!(debug: $($args),+); }; }
 #[doc(hidden)] #[macro_export]
-macro_rules! warn_ { ($($args:expr),+) => { log_!(warn: $($args),+); }; }
+macro_rules! warn_ { ($($args:expr),+) => { log_!(warn: $($args),+) }; }
 
 impl log::Log for RocketLogger {
     #[inline(always)]
@@ -145,7 +145,7 @@ impl log::Log for RocketLogger {
     }
 }
 
-crate fn try_init(level: LoggingLevel, verbose: bool) -> bool {
+pub(crate) fn try_init(level: LoggingLevel, verbose: bool) -> bool {
     if level == LoggingLevel::Off {
         return false;
     }
@@ -198,13 +198,13 @@ fn usize_to_filter(num: usize) -> log::LevelFilter {
     }
 }
 
-crate fn push_max_level(level: LoggingLevel) {
+pub(crate) fn push_max_level(level: LoggingLevel) {
     LAST_LOG_FILTER.store(filter_to_usize(log::max_level()), Ordering::Release);
     PUSHED.store(true, Ordering::Release);
     log::set_max_level(level.to_level_filter());
 }
 
-crate fn pop_max_level() {
+pub(crate) fn pop_max_level() {
     if PUSHED.load(Ordering::Acquire) {
         log::set_max_level(usize_to_filter(LAST_LOG_FILTER.load(Ordering::Acquire)));
     }

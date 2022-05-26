@@ -30,7 +30,7 @@ mod stream;
 mod response;
 mod debug;
 
-crate mod flash;
+pub(crate) mod flash;
 
 pub mod content;
 pub mod status;

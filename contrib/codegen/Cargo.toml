@@ -18,7 +18,7 @@ database_attribute = []
 proc-macro = true
 
 [dependencies]
-devise = "0.2"
+devise = "0.2.1"
 quote = "0.6"
 
 [build-dependencies]

@@ -36,7 +36,7 @@ fn entry_to_modules(pat: &LitStr) -> std::result::Result<Vec<TokenStream2>, Box<
         let ident = Ident::new(&name, pat.span());
         let full_path = Path::new(&manifest_dir).join(&path).display().to_string();
         modules.push(quote_spanned!(pat.span() =>
-            #[doc(include = #full_path)]
+            #[doc = include_str!(#full_path)]
             struct #ident;
         ))
     }

@@ -34,7 +34,7 @@ state = "0.4.1"
 time = "0.1"
 memchr = "2" # TODO: Use pear instead.
 base64 = "0.13"
-pear = "0.1"
+pear = "0.1.5"
 atty = "0.2"
 
 [build-dependencies]

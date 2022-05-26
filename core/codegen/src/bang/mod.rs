@@ -10,7 +10,7 @@ mod uri;
 mod uri_parsing;
 mod test_guide;
 
-crate fn prefix_last_segment(path: &mut Path, prefix: &str) {
+pub(crate) fn prefix_last_segment(path: &mut Path, prefix: &str) {
     let mut last_seg = path.segments.last_mut().expect("syn::Path has segments");
     last_seg.value_mut().ident = last_seg.value().ident.prepend(prefix);
 }

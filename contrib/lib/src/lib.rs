@@ -1,4 +1,3 @@
-#![feature(crate_visibility_modifier)]
 #![feature(never_type)]
 #![feature(doc_cfg)]
 

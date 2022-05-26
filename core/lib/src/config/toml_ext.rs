@@ -81,7 +81,7 @@ pub fn parse_simple_toml_value(mut input: &str) -> StdResult<Value, String> {
 
 /// A simple wrapper over a `Value` reference with a custom implementation of
 /// `Display`. This is used to log config values at initialization.
-crate struct LoggedValue<'a>(pub &'a Value);
+pub(crate) struct LoggedValue<'a>(pub &'a Value);
 
 impl<'a> fmt::Display for LoggedValue<'a> {
     #[inline]

@@ -1,7 +1,6 @@
 #![allow(incomplete_features)]
 #![feature(specialization)]
 #![feature(proc_macro_hygiene)]
-#![feature(crate_visibility_modifier)]
 #![feature(doc_cfg)]
 #![recursion_limit="512"]
 
@@ -46,7 +45,7 @@ mod header;
 mod accept;
 mod raw_str;
 
-crate mod parse;
+pub(crate) mod parse;
 
 pub mod uncased;
 

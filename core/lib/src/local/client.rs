@@ -69,7 +69,7 @@ use error::LaunchError;
 /// [`post()`]: #method.post
 pub struct Client {
     rocket: Rocket,
-    crate cookies: Option<RwLock<CookieJar>>,
+    pub(crate) cookies: Option<RwLock<CookieJar>>,
 }
 
 impl Client {
