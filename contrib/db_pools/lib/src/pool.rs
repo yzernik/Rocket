@@ -42,6 +42,10 @@ use {
 ///     async fn get(&self) -> Result<Self::Connection, Self::Error> {
 ///         todo!("fetch one connection from the pool");
 ///     }
+///
+///     async fn close(&self) {
+///         todo!("gracefully shutdown connection pool");
+///     }
 /// }
 /// ```
 ///
@@ -79,6 +83,8 @@ use {
 /// #    fn acquire(&self) -> Result<Connection, GetError> {
 /// #        Ok(())
 /// #    }
+/// #
+/// #   async fn shutdown(&self) { }
 /// # }
 ///
 /// #[rocket::async_trait]
@@ -103,6 +109,10 @@ use {
 ///         // Get one connection from the pool, here via an `acquire()` method.
 ///         // Map errors of type `GetError` to `Error<_, GetError>`.
 ///         self.acquire().map_err(Error::Get)
+///     }
+///
+///     async fn close(&self) {
+///         self.shutdown().await;
 ///     }
 /// }
 /// ```
@@ -136,6 +146,13 @@ pub trait Pool: Sized + Send + Sync + 'static {
     /// such as a preconfigured timeout elapsing or when the database server is
     /// unavailable.
     async fn get(&self) -> Result<Self::Connection, Self::Error>;
+
+    /// Shutdown the connection pool, disallowing any new connections from being
+    /// retrieved and waking up any tasks with active connections.
+    ///
+    /// The returned future may either resolve when all connections are known to
+    /// have closed or at any point prior. Details are implementation specific.
+    async fn close(&self);
 }
 
 #[cfg(feature = "deadpool")]
@@ -195,6 +212,10 @@ mod deadpool_postgres {
         async fn get(&self) -> Result<Self::Connection, Self::Error> {
             self.get().await.map_err(Error::Get)
         }
+
+        async fn close(&self) {
+            <Pool<M, C>>::close(self)
+        }
     }
 }
 
@@ -248,6 +269,10 @@ mod sqlx {
         async fn get(&self) -> Result<Self::Connection, Self::Error> {
             self.acquire().await.map_err(Error::Get)
         }
+
+        async fn close(&self) {
+            <sqlx::Pool<D>>::close(self).await;
+        }
     }
 }
 
@@ -277,6 +302,10 @@ mod mongodb {
 
         async fn get(&self) -> Result<Self::Connection, Self::Error> {
             Ok(self.clone())
+        }
+
+        async fn close(&self) {
+            // nothing to do for mongodb
         }
     }
 }
